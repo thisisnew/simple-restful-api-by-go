@@ -18,7 +18,7 @@ type Profiles struct {
 	IsAdmin string `gorm:"column:is_admin"`
 }
 
-const dsn = "root:1234@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local"
+const dsn string = "root:1234@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local"
 
 func main() {
 
