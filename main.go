@@ -26,7 +26,7 @@ func main() {
 	router.HandleFunc("/", GetProfileList).Methods("GET")
 	router.HandleFunc("/profile/{id}", GetProfile).Methods("GET")
 	router.HandleFunc("/insert", insertProfile).Methods("POST")
-	router.HandleFunc("/update", updateProfile).Methods("POST")
+	router.HandleFunc("/update", updateProfile).Methods("PATCH")
 	router.HandleFunc("/delete/{id}", deleteProfile).Methods("DELETE")
 
 	http.ListenAndServe(":8080", httpHandler(router))
@@ -124,7 +124,6 @@ func deleteProfile(w http.ResponseWriter, r *http.Request) {
 
 	var profiles Profiles
 	db.Where("id = ?", id).Delete(&profiles)
-	db.Commit()
 
 	json.NewEncoder(w).Encode(map[string]int{"status": http.StatusOK})
 }
