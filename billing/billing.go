@@ -12,8 +12,8 @@ import (
 )
 
 type Items struct {
-	Billings Billings `json:"items"`
-	PageInfo PageInfo `json:"pageInfo"`
+	Billings []Billings `json:"items"`
+	PageInfo PageInfo   `json:"pageInfo"`
 }
 
 type Billings struct {
@@ -140,7 +140,7 @@ func GetBillingList(w http.ResponseWriter, r *http.Request) {
 	billings.DepositAmount = 0
 
 	var items Items
-	items.Billings = billings
+	items.Billings = append(items.Billings, billings)
 	items.PageInfo = PageInfo{
 		TotalRecord: 1,
 		TotalPage:   1,
