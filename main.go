@@ -6,7 +6,6 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"net/http"
-	billing "rest/billing"
 	util "rest/util"
 )
 
@@ -24,12 +23,12 @@ const dsn string = "root:1234@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime
 func main() {
 
 	router := mux.NewRouter()
-	//router.HandleFunc("/", GetProfileList).Methods("GET")
-	router.HandleFunc("/", billing.GetBillingList).Methods("GET")
-	router.HandleFunc("/profile/{id}", GetProfile).Methods("GET")
-	router.HandleFunc("/insert", insertProfile).Methods("POST")
-	router.HandleFunc("/update", updateProfile).Methods("PATCH")
-	router.HandleFunc("/delete/{id}", deleteProfile).Methods("DELETE")
+	router.HandleFunc("/profiles", GetProfileList).Methods("GET")
+	//router.HandleFunc("/", billing.GetBillingList).Methods("GET")
+	router.HandleFunc("/profiles/{id}", GetProfile).Methods("GET")
+	router.HandleFunc("/profiles", insertProfile).Methods("POST")
+	router.HandleFunc("/profiles/{id}", updateProfile).Methods("PATCH")
+	router.HandleFunc("/profiles/{id}", deleteProfile).Methods("DELETE")
 
 	http.ListenAndServe(":8080", util.HttpHandler(router))
 }
