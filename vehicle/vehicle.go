@@ -2,13 +2,8 @@ package vehicle
 
 import (
 	"encoding/json"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
-	"log"
 	"net/http"
-	"os"
-	"time"
+	connection "rest/db"
 )
 
 type Vehicles struct {
@@ -133,25 +128,9 @@ type State struct {
 	TpmsRr    string `json:"tpmsRr"`
 }
 
-const dsn string = "root:1234@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local"
-
 func getAbnormalOperationVehicleList(w http.ResponseWriter, r *http.Request) {
 
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: logger.New(
-			log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
-			logger.Config{
-				SlowThreshold:             time.Second, // Slow SQL threshold
-				LogLevel:                  logger.Info, // Log level
-				IgnoreRecordNotFoundError: true,        // Ignore ErrRecordNotFound error for logger
-				Colorful:                  true,        // Disable color
-			},
-		),
-	})
-
-	if err != nil {
-		panic("failed to connect database")
-	}
+	db := connection.GetDB()
 
 	var vehicle []Vehicle
 	db.Find(&vehicle)
@@ -178,21 +157,7 @@ func getAbnormalOperationVehicleList(w http.ResponseWriter, r *http.Request) {
 
 func GetAvailableVehicleList(w http.ResponseWriter, r *http.Request) {
 
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: logger.New(
-			log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
-			logger.Config{
-				SlowThreshold:             time.Second, // Slow SQL threshold
-				LogLevel:                  logger.Info, // Log level
-				IgnoreRecordNotFoundError: true,        // Ignore ErrRecordNotFound error for logger
-				Colorful:                  true,        // Disable color
-			},
-		),
-	})
-
-	if err != nil {
-		panic("failed to connect database")
-	}
+	db := connection.GetDB()
 
 	var vehicle Vehicle
 	db.Table("vehicle").Find(&vehicle)
