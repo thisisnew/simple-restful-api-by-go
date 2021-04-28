@@ -56,7 +56,8 @@ type Vehicle struct {
 
 type Branch struct {
 	Id                 uint   `json:"id"`
-	BusinessId         string `json:"businessId"`
+	BusinessID         string `json:"businessId"`
+	Business           Business
 	Name               string `json:"name"`
 	BusinessRegNum     string `json:"businessRegNum"`
 	CompanyBusiness    string `json:"companyBusiness"`
