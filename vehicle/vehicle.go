@@ -193,6 +193,14 @@ func GetAvailableVehicleList(w http.ResponseWriter, r *http.Request) {
 		panic("failed to connect database")
 	}
 
+	var vehicle Vehicle
+	db.Table("vehicle").Find(&vehicle)
+
+	if vehicle.Id == "" {
+		json.NewEncoder(w).Encode(map[string]string{"result": "데이터가 없습니다."})
+		return
+	}
+
 	var model Model
 	db.Table("model").Find(&model)
 
@@ -207,14 +215,6 @@ func GetAvailableVehicleList(w http.ResponseWriter, r *http.Request) {
 
 	var state State
 	db.Table("state").Find(&state)
-
-	var vehicle Vehicle
-	db.Table("vehicle").Find(&vehicle)
-
-	if vehicle.Id == "" {
-		json.NewEncoder(w).Encode(map[string]string{"result": "데이터가 없습니다."})
-		return
-	}
 
 	vehicle.Business = business
 	vehicle.Insurance = insurance
