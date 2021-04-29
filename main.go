@@ -3,14 +3,15 @@ package main
 import (
 	"github.com/gorilla/mux"
 	"net/http"
+	"rest/company"
 	util "rest/util"
-	"rest/vehicle"
 )
 
 func main() {
 
 	router := mux.NewRouter()
-	router.HandleFunc("/", vehicle.GetAvailableVehicleList).Methods("GET")
+	//router.HandleFunc("/", vehicle.GetAvailableVehicleList).Methods("GET")
+	router.HandleFunc("/", company.GetCompanyList).Methods("GET")
 	//router.HandleFunc("/profiles", GetProfileList).Methods("GET")
 	//router.HandleFunc("/", billing.GetBillingList).Methods("GET")
 	//router.HandleFunc("/", billing.GetBillingList).Methods("GET")
