@@ -54,17 +54,10 @@ func GetCompanyList(w http.ResponseWriter, r *http.Request) {
 	var address []Address
 	db.Table("address").Find(&address)
 
-	for _, company := range companies {
-		for _, addr := range address {
-			var companyId = company.Id
-			var addrId = addr.Id
-			if companyId == addrId {
-				company.Address = Address{
-					Id:            addr.Id,
-					ZipCode:       addr.ZipCode,
-					Address:       addr.Address,
-					DetailAddress: addr.DetailAddress,
-				}
+	for i := 0; i < len(companies); i++ {
+		for j := 0; j < len(address); j++ {
+			if companies[i].Id == address[j].Id {
+				companies[i].Address = address[j]
 			}
 		}
 	}
